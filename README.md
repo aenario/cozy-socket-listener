@@ -1,11 +1,11 @@
-## Socket Listener
+# Socket Listener
 
 Helper library for interaction with cozy-data-system data changes notifications
 
-#Server-Side
+##Server-Side
 - transform Redis events to Socket.io
 
-#Client-Side
+##Client-Side
 - transform socket.io events to Backbone manipulation
 
 # About Cozy
