@@ -8,7 +8,6 @@ Helper library for interaction with cozy-data-system data changes notifications
 #Client-Side
 - transform socket.io events to Backbone manipulation
 
-
 # About Cozy
 
 Cozy Notes is suited to be deployed on the Cozy platform. Cozy is the personal
