@@ -1,0 +1,22 @@
+{
+  "name": "socket_listener",
+  "version": "0.0.0",
+  "description": "A simple binder from cozy-data-system's events to backbone models",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "cake tests"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aenario/cozy-socket-listener"
+  },
+  "author": "Romain",
+  "license": "BSD",
+  "dependencies": {
+    "redis": "~0.8.3",
+    "socket.io": "~0.9.14"
+  },
+  "devDependencies": {
+    "mocha": "~1.9.0"
+  }
+}
