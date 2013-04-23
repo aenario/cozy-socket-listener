@@ -1,4 +1,4 @@
-module.exports = class CozySocketListener
+class CozySocketListener
 
     models: {}
     events: []
@@ -130,3 +130,6 @@ module.exports = class CozySocketListener
                 @collections.forEach (collection) ->
                     return unless model = collection.get id
                     @onRemoteDelete task, collection
+
+global = module?.exports or window
+global.CozySocketListener = CozySocketListener

@@ -2,7 +2,7 @@
   "name": "socket_listener",
   "version": "0.0.0",
   "description": "A simple binder from cozy-data-system's events to backbone models",
-  "main": "lib/index.js",
+  "main": "lib/server.js",
   "scripts": {
     "test": "cake tests"
   },
