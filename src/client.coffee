@@ -1,14 +1,13 @@
-Task = require('models/task').Task
-
-class SocketListener
+module.exports = class CozySocketListener
 
     models: {}
     events: []
 
+    shouldFetchCreated: (id) -> true
     onRemoteCreation: (model) ->
+
     onRemoteUpdate: (model, collection) ->
     onRemoteDelete: (model, collection) ->
-    shouldBeAdded: (model, collection) -> true
 
     constructor: () ->
         try
@@ -18,8 +17,8 @@ class SocketListener
             console.log err.stack
 
         @collections = []
-        @tmpcollection = new Backbone.Collection()
-        @watch @tmpcollection
+        @watch @tmpcollection = new Backbone.Collection()
+
         @stack = []
         @ignore = []
         @paused = 0
@@ -40,6 +39,11 @@ class SocketListener
         collection.on 'destroy', @resume
         collection.on 'error', @resume
 
+    stopWatching: (toRemove) ->
+        for collection, i in @collections
+            if collection is toRemove
+                return @collections.splice i, 1
+
     watchOne: (model) ->
         @collections[0].add model
 
@@ -48,9 +52,7 @@ class SocketListener
 
             operation = if model.isNew() then 'create' else 'update'
 
-            doctype = null
-            for key, Model of @models
-                doctype = key if model instanceof Model
+            doctype = @getDoctypeOf model
 
             return unless doctype?
 
@@ -67,6 +69,10 @@ class SocketListener
             if @paused <= 0
                 @processStack()
                 @paused = 0
+
+    getDoctypeOf: (model) ->
+        for key, Model of @models
+            return key if model instanceof Model
 
     cleanStack: ->
         ignoreIndex = 0
@@ -107,6 +113,7 @@ class SocketListener
         {doctype, operation, id} = event
         switch operation
             when 'create'
+                return unless shouldFetchCreated(id)
                 model = new @models[doctype](id: id)
                 model.fetch
                     success: @onRemoteCreation
@@ -123,7 +130,3 @@ class SocketListener
                 @collections.forEach (collection) ->
                     return unless model = collection.get id
                     @onRemoteDelete task, collection
-
-
-
-module.exports = SocketListener
