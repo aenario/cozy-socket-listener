@@ -5,6 +5,10 @@ task 'tests', 'run tests', ->
     command += "--compilers coffee:coffee-script --colors"
     exec command
 
-
 task 'build', 'build src into lib', ->
     exec "coffee --output lib --compile src"
+
+task 'cpclient', 'copy client in brunch vendors', ->
+    command  = "cp lib/client.js "
+    command += "../../client/vendor/scripts/socketlistener-0.0.0.js"
+    exec command
