@@ -34,6 +34,7 @@ class CozySocketListener
 
     watch: (collection) ->
         @collections.push collection
+        collection.socketListener = this
         collection.on 'request', @pause
         collection.on 'sync', @resume
         collection.on 'destroy', @resume
@@ -113,7 +114,7 @@ class CozySocketListener
         {doctype, operation, id} = event
         switch operation
             when 'create'
-                return unless shouldFetchCreated(id)
+                return unless @shouldFetchCreated(id)
                 model = new @models[doctype](id: id)
                 model.fetch
                     success: @onRemoteCreation
@@ -127,9 +128,9 @@ class CozySocketListener
                                 @onRemoteUpdate fetched, collection
 
             when 'delete'
-                @collections.forEach (collection) ->
+                @collections.forEach (collection) =>
                     return unless model = collection.get id
-                    @onRemoteDelete task, collection
+                    @onRemoteDelete model, collection
 
 global = module?.exports or window
 global.CozySocketListener = CozySocketListener

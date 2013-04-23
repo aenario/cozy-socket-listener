@@ -10,7 +10,9 @@
     "type": "git",
     "url": "https://github.com/aenario/cozy-socket-listener"
   },
-  "author": "Romain",
+  "author": {
+    "name": "Romain"
+  },
   "license": "BSD",
   "dependencies": {
     "redis": "~0.8.3",
@@ -18,5 +20,13 @@
   },
   "devDependencies": {
     "mocha": "~1.9.0"
-  }
+  },
+  "readme": "# Socket Listener\r\n\r\nHelper library for interaction with cozy-data-system data changes notifications\r\n\r\n##Server-Side\r\n- transform Redis events to Socket.io\r\n\r\n##Client-Side\r\n- transform socket.io events to Backbone manipulation\r\n\r\n# About Cozy\r\n\r\nCozy Notes is suited to be deployed on the Cozy platform. Cozy is the personal\r\nserver for everyone. It allows you to install your every day web applications\r\neasily on your server, a single place you control. This means you can manage\r\nefficiently your data while protecting your privacy without technical skills.\r\n\r\nMore informations and hosting services on:\r\nhttps://cozycloud.cc\r\n\r\n# Cozy on IRC\r\n\r\nFeel free to check out our IRC channel (#cozycloud on irc.freenode.org) if you have any technical issues/inquiries or simply to speak about Cozy cloud in general.\r\n",
+  "readmeFilename": "README.md",
+  "_id": "socket_listener@0.0.0",
+  "dist": {
+    "shasum": "3f5becd9256caa364e67986f3cba23e705b165b5"
+  },
+  "_resolved": "git://github.com/aenario/cozy-socket-listener.git#d208fa97f87c8597f1ad6754d0d824a76f707962",
+  "_from": "socket_listener@git://github.com/aenario/cozy-socket-listener.git#master"
 }
