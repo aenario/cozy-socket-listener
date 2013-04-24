@@ -37,7 +37,7 @@ class CozySocketListener
 
         @collections.push collection
         collection.socketListener = this
-        watchOne collection
+        @watchOne collection
 
     stopWatching: (toRemove) ->
         for collection, i in @collections
