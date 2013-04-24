@@ -10,5 +10,5 @@ task 'build', 'build src into lib', ->
 
 task 'cpclient', 'copy client in brunch vendors', ->
     command  = "cp lib/client.js "
-    command += "../../client/vendor/scripts/socketlistener-0.0.0.js"
+    command += "../../client/vendor/scripts/socketlistener-0.0.2.js"
     exec command

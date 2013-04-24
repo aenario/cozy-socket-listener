@@ -4,7 +4,7 @@ class CozySocketListener
     events: []
 
     shouldFetchCreated: (id) -> true
-    onRemoteCreation: (model) ->
+    onRemoteCreate: (model) ->
 
     onRemoteUpdate: (model, collection) ->
     onRemoteDelete: (model, collection) ->
@@ -17,7 +17,6 @@ class CozySocketListener
             console.log err.stack
 
         @collections = []
-        @watch @tmpcollection = new Backbone.Collection()
 
         @stack = []
         @ignore = []
@@ -33,12 +32,12 @@ class CozySocketListener
             socket.on event, @callbackFactory(event)
 
     watch: (collection) ->
+        #shortcut for app with a single collection
+        @collection = collection if @collections.length is 0
+
         @collections.push collection
         collection.socketListener = this
-        collection.on 'request', @pause
-        collection.on 'sync', @resume
-        collection.on 'destroy', @resume
-        collection.on 'error', @resume
+        watchOne collection
 
     stopWatching: (toRemove) ->
         for collection, i in @collections
@@ -46,7 +45,10 @@ class CozySocketListener
                 return @collections.splice i, 1
 
     watchOne: (model) ->
-        @collections[0].add model
+        model.on 'request', @pause
+        model.on 'sync', @resume
+        model.on 'destroy', @resume
+        model.on 'error', @resume
 
     pause: (model, xhr, options) =>
         if options.ignoreMySocketNotification
@@ -117,7 +119,8 @@ class CozySocketListener
                 return unless @shouldFetchCreated(id)
                 model = new @models[doctype](id: id)
                 model.fetch
-                    success: @onRemoteCreation
+                    success: (fetched) =>
+                        @onRemoteCreate fetched
 
             when 'update'
                 @collections.forEach (collection) =>
